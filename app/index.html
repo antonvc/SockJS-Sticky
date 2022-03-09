@@ -4,21 +4,33 @@
     <script src="https://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"></script>
     <style>
       .box {
-          width: 300px;
-          float: left;
           margin: 0 20px 0 20px;
+          border: 1px solid;
+          border-radius: 4px;
+          border-color: grey;
       }
-      .box div, .box input {
+      #first {
+        float: left;
+        width: 30%;
+      }
+      #second {
+          float:left;
+
+          width: 65%;
+          max-width: 900px;
+      }
+      .box input {
           border: 1px solid;
           -moz-border-radius: 4px;
           border-radius: 4px;
-          width: 100%;
+          width: 95%;
           padding: 0px;
           margin: 5px;
+          
       }
       .box div {
           border-color: grey;
-          height: 300px;
+          height: 600px;
           overflow: auto;
       }
       .box input {
@@ -28,18 +40,33 @@
           margin-left: 30px;
       }
       body {
-          background-color: #F0F0F0;
+          background-color: #FFFFFF;
           font-family: "Arial";
       }
     </style>
 </head><body lang="en">
-    <h1>SockJS Echo example</h1>
+    <h1>SockJS Sticky session support</h1>
 
-    <div id="first" class="box">
-      <div></div>
-      <form><input autocomplete="off" value="Type here..."></input></form>
-    </div>
 
+    <div id="second" class="box">
+        <h3>Architecture</h3>
+        <img src="architecture.png" style="width: 80%;">
+        <div style="float: left">
+            <ul>
+                <li>Source IP based stickiness</li>
+                <li>NLB doesn't support stickiness when combined with TLS termination</li>
+                <li>NLB has pods as targets<br>
+                    <img src="targets.png" style="width: 50%;">
+                </li>
+            </ul>
+           
+        </div>
+      </div>
+      <div id="first" class="box">
+        <h3>Demo (Echo server)</h3>
+        <div></div>
+        <form><input autocomplete="off" placeholder="Type here..."></input></form>
+      </div>
     <script>
         var sockjs_url = '/echo';
         var sockjs = new SockJS(sockjs_url);
@@ -56,16 +83,16 @@
             div.scrollTop(div.scrollTop()+10000);
         };
 
-        sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
-        sockjs.onmessage = function(e) {print('[.] message', e.data);};
+        sockjs.onopen    = function()  { sockjs.send('Welcome');};
+        sockjs.onmessage = function(e) {print('', e.data);};
         sockjs.onclose   = function()  {print('[*] close');};
 
         form.submit(function() {
-            print('[ ] sending', inp.val());
+            //print('[ ] sending', inp.val());
             sockjs.send(inp.val());
             inp.val('');
             return false;
         });
-
+       
     </script>
 </body></html>
