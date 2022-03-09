@@ -1,7 +1,6 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: sockjs
   name: sockjs
@@ -9,11 +8,15 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: external
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-1:832256313046:certificate/8c40ac5f-7977-4f25-bbb1-805a075ef896
-    #service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: stickiness.enabled=true,stickiness.type=source_ip
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+  labels:
+    app: sockjs
+  name: sockjs
+
 spec:
   ports:
-  - port: 443
+  - port: 80
     protocol: TCP
     targetPort: 9999
   type: LoadBalancer
