@@ -17,3 +17,6 @@ The network loadbalancer gets deployed automatically when the service.yaml is ap
 
 
 *Note this is not production ready code, please use at your own risk*
+
+Next steps:
+- [ ] Use CDK to deploy this sample
