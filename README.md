@@ -1,4 +1,4 @@
-# SockJS-test
+# SockJS-Sticky
 This demo shows how to achieve session stickiness for SockJS on AWS. 
 The stickiness is based on source IP and doesn't require any special configuration of the SockJS client.
 
