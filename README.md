@@ -14,3 +14,6 @@ The network loadbalancer gets deployed automatically when the service.yaml is ap
 
 ## Architecture
 ![Architecture](app/architecture.png)
+
+
+*Note this is not production ready code, please use at your own risk*
