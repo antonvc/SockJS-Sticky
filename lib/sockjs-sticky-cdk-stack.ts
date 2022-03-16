@@ -1,8 +1,10 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as eks from 'aws-cdk-lib/aws-eks';
+import { DockerImageAsset } from 'aws-cdk-lib/aws-ecr-assets';
 import * as cdk8s from 'cdk8s';
 import { KubeDeployment, KubeService, IntOrString } from '../imports/k8s';
+import * as path from 'path';
 
 
 //we want to pass the image URL to the graph as it's dynamic and depends on where the image is pushed to during runtime
@@ -26,10 +28,12 @@ export class SockjsStickyCdkStack extends Stack {
     });
 
     //build the docker image and push it to ECR
-    //TODO
+    const asset = new DockerImageAsset(this, 'SockJsImage', {
+      directory: path.join(__dirname, '../app'),
+    });
 
     //create the chart containing our Kubernetes definitions
-    const sockJsChart = new SockJsChart(new cdk8s.App(), 'sockJS', { image: '832256313046.dkr.ecr.eu-west-1.amazonaws.com/sockjs:v5' });
+    const sockJsChart = new SockJsChart(new cdk8s.App(), 'sockJS', { image: asset.imageUri });
 
     // add the cdk8s chart to the cluster
     cluster.addCdk8sChart('sockJS', sockJsChart);
