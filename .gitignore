@@ -1,2 +1,9 @@
-app/node_modules/
-.DS_Store
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+.vscode
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
