@@ -55,3 +55,6 @@ kubectl get service
 
 ## Architecture
 ![Architecture](app/architecture.png)
+
+## Cleanup
+When you're finished you can run `npm run destroy` to cleanup and remove all infrastructure that was used for this demo.
