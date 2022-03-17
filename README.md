@@ -55,9 +55,3 @@ kubectl get service
 
 ## Architecture
 ![Architecture](app/architecture.png)
-
-
-*Note this is not production ready code, please use at your own risk*
-
-Next steps:
-- [ ] Use CDK to deploy this sample
