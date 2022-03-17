@@ -2,13 +2,15 @@
   "name": "sockjs-sticky-cdk",
   "version": "0.1.0",
   "bin": {
-    "sockjs-sticky-cdk": "bin/sockjs-sticky-cdk.js"
+    "cdk": "bin/sockjs-sticky-cdk.js"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy": "npm run cdk deploy",
+    "destroy": "npm run cdk destroy"  
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",

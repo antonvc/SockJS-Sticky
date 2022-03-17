@@ -74,7 +74,7 @@ class SockJsChart extends cdk8s.Chart {
         namespace: namespace.name
       },
       spec: {
-        replicas: 5,
+        replicas: 3,
         selector: {
           matchLabels: label
         },
