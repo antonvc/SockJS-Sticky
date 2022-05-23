@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    elbv2.k8s.aws/pod-readiness-gate-inject: enabled
+  name: sockjs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: stickiness.enabled=true,stickiness.type=source_ip,deregistration_delay.connection_termination.enabled=false,deregistration_delay.timeout_seconds=0
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+  name: sockjs-service-c864b2b0
+  namespace: sockjs
+spec:
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sockjs-deployment
+  namespace: sockjs
+spec:
+  replicas: 20
+  selector:
+    matchLabels:
+      app: sockjs
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: sockjs
+    spec:
+      containers:
+      - image: xxx.dkr.ecr.eu-west-1.amazonaws.com/sockjs:latest
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - sleep 180
+        name: sockjs
+        ports:
+        - containerPort: 9999
+          protocol: TCP
+        resources: {}
+      terminationGracePeriodSeconds: 180

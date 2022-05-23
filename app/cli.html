@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"></script>
+    <style>
+      .box {
+          margin: 0 20px 0 20px;
+          border: 1px solid;
+          border-radius: 4px;
+          border-color: grey;
+      }
+      #first {
+        float: left;
+        width: 80%;
+      }
+
+      .box input {
+          border: 1px solid;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          width: 95%;
+          padding: 0px;
+          margin: 5px;
+          
+      }
+      .box div {
+          border-color: grey;
+          height: 600px;
+          overflow: auto;
+      }
+      .box input {
+          height: 30px;
+      }
+      h1 {
+          margin-left: 30px;
+      }
+      body {
+          background-color: #FFFFFF;
+          font-family: "Arial";
+      }
+    </style>
+</head><body lang="en">
+      <div id="first" class="box">
+        <div></div>
+      </div>
+    <script>
+        var sockjs_url = '/echo';
+           
+        $('#first input').focus();
+        var sockjs
+        function start() {
+            sockjs = new SockJS(sockjs_url);
+            sockjs.onopen    = function()  { sockjs.send('connected');};
+            sockjs.onmessage = function(e) {print('', e.data); setTimeout(ping,1000);};
+            sockjs.onclose   = function()  {print('[*] disconnected'); setTimeout(start,1000)};
+        }
+        var div  = $('#first div');
+        var inp  = $('#first input');
+        var form = $('#first form');
+
+        var print = function(m, p) {
+            p = (p === undefined) ? '' : JSON.stringify(p);
+            div.append($("<code>").text(m + ' ' + p));
+            div.append($("<br>"));
+            div.scrollTop(div.scrollTop()+10000);
+        };
+        function ping() {
+            sockjs.send('ping');
+        }
+       
+        start();
+
+    </script>
+</body></html>

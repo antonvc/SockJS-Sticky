@@ -8,7 +8,8 @@ var sockjs_opts = {sockjs_url: "https://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min
 var sockjs_echo = sockjs.createServer(sockjs_opts);
 sockjs_echo.on('connection', function(conn) {
     conn.on('data', function(message) {
-        conn.write(process.env.HOSTNAME + ': ' +message);
+        const today  = new Date();
+        conn.write(today.toLocaleString() + '(' + process.env.HOSTNAME.substr(-5) + '): ' +message);
     });
 });
 

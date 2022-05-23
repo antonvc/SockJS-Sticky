@@ -10,7 +10,7 @@
     "test": "jest",
     "cdk": "cdk",
     "deploy": "npm run cdk deploy",
-    "destroy": "npm run cdk destroy"  
+    "destroy": "npm run cdk destroy"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
@@ -25,6 +25,7 @@
     "aws-cdk-lib": "2.16.0",
     "cdk8s": "^2.2.41",
     "constructs": "^10.0.89",
+    "sockjs-client": "^1.6.0",
     "source-map-support": "^0.5.16"
   }
 }
